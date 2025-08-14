@@ -1,0 +1,41 @@
+{
+  "name" : "etl_credit_card_silver_to_gold_fraud_daily",
+  "jobMode" : "SCRIPT",
+  "description" : "",
+  "role" : "arn:aws:iam::742604757472:role/aegon-demo-glue-role",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aegon-demo-datalake/scripts/etl_credit_card_silver_to_gold_fraud_daily.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--iceberg.catalog.glue.warehouse" : "s3://aegon-demo-datalake/",
+    "--enable-iceberg" : "true",
+    "--enable-job-insights" : "true",
+    "--additional-python-modules" : "holidays==0.53",
+    "--enable-glue-datacatalog" : "true",
+    "--datalake-formats" : "iceberg",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aegon-demo-datalake/temp/",
+    "--iceberg.catalog.glue.catalog-impl" : "org.apache.iceberg.aws.glue.GlueCatalog",
+    "--iceberg.catalog" : "glue_catalog",
+    "--iceberg.catalog.glue.io-impl" : "org.apache.iceberg.aws.s3.S3FileIO"
+  },
+  "maxRetries" : 1,
+  "allocatedCapacity" : 2,
+  "timeout" : 10,
+  "maxCapacity" : 2.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "Aegon_demo_fraud_analytics",
+    "branch" : "development",
+    "folder" : "aws-glue/jobs"
+  }
+}
